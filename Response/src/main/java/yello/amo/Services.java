@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import Models.IncidentResponse.IncidentResponse;
+import Models.IncidentResponse.SearchResponseStatus;
 import BLL.ResponseManager;
 
 @Path("api")
@@ -60,6 +61,20 @@ public class Services {
 		else
 		{
 			return Response.ok(ResponseManager.addIncidentResponse(Incident)).build();
+		}
+	}
+	@Path("Incident/searchResponseStatus")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response InsertResponse(SearchResponseStatus Incident) {
+		if(Incident.getSequanceNumber() == 0)
+		{
+			return Response.ok(" No Response Squance Number Provided ").build();
+		}
+		else
+		{
+			return Response.ok(ResponseManager.SearchResponseStatus(Incident)).build();
 		}
 	}
 

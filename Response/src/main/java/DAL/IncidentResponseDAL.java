@@ -47,5 +47,35 @@ public class IncidentResponseDAL {
 
 		return ResponseData;
 	}
+	public static ResponseStatusMsg SearchResponseStatus(SearchResponseStatus incidentResponse) {
+
+		String SPsql = "EXEC usp_ResponseStatus_SearchByID ?,?,?,?";
+		ResponseStatusMsg ResponseData = new ResponseStatusMsg();
+		Connection conn = DBManager.getDBConn();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setInt(1, incidentResponse.getSequanceNumber());
+			cstmt.registerOutParameter(2, Types.NVARCHAR);
+			cstmt.registerOutParameter(3, Types.NVARCHAR);
+			cstmt.registerOutParameter(4, Types.NVARCHAR);
+			cstmt.execute();
+			ResponseData.setResponseStatus(cstmt.getString(4));
+			ResponseData.setResponseMessage(cstmt.getString(3));
+			ResponseData.setReturnHex(cstmt.getString(2));	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return ResponseData;
+	}
 
 }

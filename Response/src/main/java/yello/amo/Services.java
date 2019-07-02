@@ -57,10 +57,6 @@ public class Services {
 		{
 			return Response.ok(" No Persons Count Provided ").build();
 		}
-		else if(Incident.getResponseStatus() == null || Incident.getResponseStatus() == "")
-		{
-			return Response.ok(" No Response Status Provided ").build();
-		}
 		else
 		{
 			return Response.ok(ResponseManager.addIncidentResponse(Incident)).build();

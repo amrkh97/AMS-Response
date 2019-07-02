@@ -6,9 +6,8 @@ public class IncidentResponse {
 	private int pickLocID;
 	private int dropLocID;
 	private int destLocID;
-	private String responseStatus;
 	private int iSQN;
-	private String primaryResponseSQN;
+	private int primaryResponseSQN;
 	private int alarmLevelID;
 	private String personsCount;
 	public int getVin() {
@@ -59,17 +58,11 @@ public class IncidentResponse {
 	public void setPersonsCount(String personsCount) {
 		this.personsCount = personsCount;
 	}
-	public String getPrimaryResponseSQN() {
+	public int getPrimaryResponseSQN() {
 		return primaryResponseSQN;
 	}
-	public void setPrimaryResponseSQN(String primaryResponseSQN) {
+	public void setPrimaryResponseSQN(int primaryResponseSQN) {
 		this.primaryResponseSQN = primaryResponseSQN;
-	}
-	public String getResponseStatus() {
-		return responseStatus;
-	}
-	public void setResponseStatus(String responseStatus) {
-		this.responseStatus = responseStatus;
 	}
 
 }

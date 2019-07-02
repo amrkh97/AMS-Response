@@ -11,7 +11,7 @@ import Models.IncidentResponse.*;
 public class IncidentResponseDAL {
 	public static IncidentResponseMsg addResponse(IncidentResponse incidentResponse) {
 
-		String SPsql = "EXEC usp_Response_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?";
+		String SPsql = "EXEC usp_Response_Insert ?,?,?,?,?,?,?,?,?,?,?,?";
 		IncidentResponseMsg ResponseData = new IncidentResponseMsg();
 		Connection conn = DBManager.getDBConn();
 		try {
@@ -22,17 +22,16 @@ public class IncidentResponseDAL {
 			cstmt.setInt(4, incidentResponse.getDropLocID());
 			cstmt.setInt(5, incidentResponse.getDestLocID());
 			cstmt.setInt(6, incidentResponse.getiSQN());
-			cstmt.setString(7, incidentResponse.getPrimaryResponseSQN());
+			cstmt.setInt(7, incidentResponse.getPrimaryResponseSQN());
 			cstmt.setInt(8, incidentResponse.getAlarmLevelID());
 			cstmt.setString(9, incidentResponse.getPersonsCount());
-			cstmt.setString(10, incidentResponse.getResponseStatus());
+			cstmt.registerOutParameter(10, Types.NVARCHAR);
 			cstmt.registerOutParameter(11, Types.NVARCHAR);
-			cstmt.registerOutParameter(12, Types.NVARCHAR);
-			cstmt.registerOutParameter(13, Types.INTEGER);
+			cstmt.registerOutParameter(12, Types.INTEGER);
 			cstmt.execute();
-			ResponseData.setResponseID(cstmt.getInt(13));
-			ResponseData.setReturnHex(cstmt.getString(11));
-			ResponseData.setResponseMessage(cstmt.getString(12));
+			ResponseData.setResponseID(cstmt.getInt(12));
+			ResponseData.setReturnHex(cstmt.getString(10));
+			ResponseData.setResponseMessage(cstmt.getString(11));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

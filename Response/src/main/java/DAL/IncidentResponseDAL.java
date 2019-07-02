@@ -77,5 +77,36 @@ public class IncidentResponseDAL {
 
 		return ResponseData;
 	}
+	public static UpdateResponseStatusMsg UpdateResponseStatus(UpdateResponseStatus incidentResponse) {
+
+		String SPsql = "EXEC usp_ResponseStatus_UpdateByID ?,?,?,?,?";
+		UpdateResponseStatusMsg ResponseData = new UpdateResponseStatusMsg();
+		Connection conn = DBManager.getDBConn();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setInt(1, incidentResponse.getSequanceNumber());
+			cstmt.setString(2, incidentResponse.getResponseStatus());
+			cstmt.registerOutParameter(3, Types.NVARCHAR);
+			cstmt.registerOutParameter(4, Types.NVARCHAR);
+			cstmt.registerOutParameter(5, Types.NVARCHAR);
+			cstmt.execute();
+			ResponseData.setResponseStatus(cstmt.getString(5));
+			ResponseData.setResponseMessage(cstmt.getString(4));
+			ResponseData.setReturnHex(cstmt.getString(3));	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return ResponseData;
+	}
 
 }

@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 
 import Models.IncidentResponse.IncidentResponse;
 import Models.IncidentResponse.SearchResponseStatus;
+import Models.IncidentResponse.UpdateResponseStatus;
 import BLL.ResponseManager;
 
 @Path("api")
@@ -67,7 +68,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response InsertResponse(SearchResponseStatus Incident) {
+	public Response SearchResponseStatus(SearchResponseStatus Incident) {
 		if(Incident.getSequanceNumber() == 0)
 		{
 			return Response.ok(" No Response Squance Number Provided ").build();
@@ -75,6 +76,24 @@ public class Services {
 		else
 		{
 			return Response.ok(ResponseManager.SearchResponseStatus(Incident)).build();
+		}
+	}
+	@Path("Incident/updateResponseStatus")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response UpdateResponseStatus(UpdateResponseStatus Incident) {
+		if(Incident.getSequanceNumber() == 0)
+		{
+			return Response.ok(" No Response Squance Number Provided ").build();
+		}
+		else if (Incident.getResponseStatus() == null || Incident.getResponseStatus().equals("")) 
+		{
+			return Response.ok(" No Response Status Provided ").build();
+		}
+		else
+		{
+			return Response.ok(ResponseManager.UpdateResponseStatus(Incident)).build();
 		}
 	}
 

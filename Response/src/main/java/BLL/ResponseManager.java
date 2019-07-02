@@ -11,5 +11,8 @@ public class ResponseManager {
 	public static ResponseStatusMsg SearchResponseStatus(SearchResponseStatus Incident) {
 		return IncidentResponseDAL.SearchResponseStatus(Incident);
 	}
+	public static UpdateResponseStatusMsg UpdateResponseStatus(UpdateResponseStatus Incident) {
+		return IncidentResponseDAL.UpdateResponseStatus(Incident);
+	}
 
 }

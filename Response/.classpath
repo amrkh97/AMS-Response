@@ -19,7 +19,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="lib" path="/amo/lib/json-20171018.jar"/>
 	<classpathentry kind="lib" path="/amo/lib/mssql-jdbc-6.1.0.jre8.jar"/>
 	<classpathentry kind="lib" path="/amo/lib/sqljdbc4-4.0.jar"/>
@@ -29,9 +28,29 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_211">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
 		<attributes>
-			<attribute name="owner.project.facets" value="java"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/amrkh/.m2/repository/org/apache/httpcomponents/httpclient/4.3.6/httpclient-4.3.6.jar" sourcepath="C:/Users/amrkh/.m2/repository/org/apache/httpcomponents/httpclient/4.3.6/httpclient-4.3.6-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.archivename" value="httpclient-4.3.6.jar"/>
+			<attribute name="maven.groupId" value="org.apache.httpcomponents"/>
+			<attribute name="maven.artifactId" value="httpclient"/>
+			<attribute name="maven.version" value="4.3.6"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/amrkh/.m2/repository/org/apache/httpcomponents/httpcore/4.3.3/httpcore-4.3.3.jar" sourcepath="C:/Users/amrkh/.m2/repository/org/apache/httpcomponents/httpcore/4.3.3/httpcore-4.3.3-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.archivename" value="httpcore-4.3.3.jar"/>
+			<attribute name="maven.groupId" value="org.apache.httpcomponents"/>
+			<attribute name="maven.artifactId" value="httpcore"/>
+			<attribute name="maven.version" value="4.3.3"/>
+			<attribute name="maven.scope" value="compile"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>

@@ -26,7 +26,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response InsertResponse(IncidentResponse Incident) {
+	public Response InsertResponse(IncidentResponse Incident) throws Exception {
 		if(Incident.getVin() == 0)
 		{
 			return Response.ok(" No Car ID Provided ").build();

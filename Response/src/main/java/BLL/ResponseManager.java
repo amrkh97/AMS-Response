@@ -5,7 +5,7 @@ import Models.IncidentResponse.*;
 
 public class ResponseManager {
 	
-	public static IncidentResponseMsg addIncidentResponse(IncidentResponse Incident) {
+	public static IncidentResponseMsg addIncidentResponse(IncidentResponse Incident) throws Exception {
 		return IncidentResponseDAL.addResponse(Incident);
 	}
 	public static ResponseStatusMsg SearchResponseStatus(SearchResponseStatus Incident) {

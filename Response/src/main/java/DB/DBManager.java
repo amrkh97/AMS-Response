@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 public class DBManager {
 
 	private static String db_class_string = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-	private static String db_server = "jdbc:sqlserver://DESKTOP-U2V20C8;";
+	private static String db_server = "jdbc:sqlserver://41.32.255.229:1433;databaseName=DESKTOP-HHPL1PP;";
 	private static String db_name = "databaseName=KAN_AMO";
 	private static String db_userid = "admin";
 	private static String db_password = "1234";

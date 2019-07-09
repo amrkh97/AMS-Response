@@ -18,13 +18,16 @@ public class AndroidResponseModel {
 	private String destLocLong;
 	private String destLocLat;
 	private String destLocFFA ;
-
+	
 	private String incidentType;
 	private String incidentPriority;
 
 	private String alarmLevel;
 
+	private Long batchID;
+	
 	//---------------------------------------------------//
+	
 	public String getDriverFullname() {
 		return driverFullname;
 	}
@@ -105,6 +108,12 @@ public class AndroidResponseModel {
 	}
 	public void setAlarmLevel(String alarmLevelName) {
 		this.alarmLevel = alarmLevelName;
+	}
+	public Long getBatchID() {
+		return batchID;
+	}
+	public void setBatchID(Long batchID) {
+		this.batchID = batchID;
 	}
 
 	

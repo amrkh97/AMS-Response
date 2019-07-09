@@ -51,7 +51,7 @@ public class IncidentResponseDAL {
 			LocationModel destinationLocation = new LocationModel();
 			
 			 SPsql = "USE KAN_AMO; EXEC [dbo].[usp_getAndroidIncident]"
-			 		+ " ?,?,?,?,?,?,?,?,?,?,?,?"
+			 		+  "?,?,?,?,?,?,?,?,?,?,?,?,?"
 			 		+ ",?,?,?,?,?,?,?,?,?,?,?,?";	
 			 
 			 cstmt = conn.prepareCall(SPsql);
@@ -80,7 +80,7 @@ public class IncidentResponseDAL {
 			 cstmt.registerOutParameter(22, Types.NVARCHAR);//Priority Note
 			 cstmt.registerOutParameter(23, Types.NVARCHAR);//Alarm Name
 			 cstmt.registerOutParameter(24, Types.NVARCHAR);//Alarm Note
-			 
+			 cstmt.registerOutParameter(25, Types.BIGINT); //BatchID
 			 cstmt.executeUpdate();
 
 			 currentResponse.setDriverFullname(cstmt.getString(6)+" "+cstmt.getString(7));
@@ -101,6 +101,7 @@ public class IncidentResponseDAL {
 			 currentResponse.setIncidentType(cstmt.getString(19));
 			 currentResponse.setIncidentPriority(cstmt.getString(21));
 			 currentResponse.setAlarmLevel(cstmt.getString(23));
+			 currentResponse.setBatchID(cstmt.getLong(25));
 			 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			System.out.println(gson.toJson(currentResponse));
@@ -114,14 +115,12 @@ public class IncidentResponseDAL {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
 				System.out.println("Connention Closed");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -144,14 +143,12 @@ public class IncidentResponseDAL {
 			ResponseData.setResponseMessage(cstmt.getString(3));
 			ResponseData.setReturnHex(cstmt.getString(2));	
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
 				System.out.println("Connention Closed");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -175,14 +172,12 @@ public class IncidentResponseDAL {
 			ResponseData.setResponseMessage(cstmt.getString(4));
 			ResponseData.setReturnHex(cstmt.getString(3));	
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
 				System.out.println("Connention Closed");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -190,6 +185,7 @@ public class IncidentResponseDAL {
 		return ResponseData;
 	}
 
+	/*
 	public static void main(String[] args) throws Exception {
 		IncidentResponse incidentResponse = new IncidentResponse();
 		incidentResponse.setVin(1);
@@ -204,5 +200,5 @@ public class IncidentResponseDAL {
 		IncidentResponseDAL.addResponse(incidentResponse);
 		
 	}
-	
+	*/
 }

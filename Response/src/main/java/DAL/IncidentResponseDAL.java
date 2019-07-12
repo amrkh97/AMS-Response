@@ -84,6 +84,7 @@ public class IncidentResponseDAL {
 			 cstmt.registerOutParameter(25, Types.BIGINT); //BatchID
 			 cstmt.executeUpdate();
 
+			 currentResponse.setResponseSequenceNumber(ResponseData.getResponseID());
 			 currentResponse.setDriverFullname(cstmt.getString(6)+" "+cstmt.getString(7));
 			 currentResponse.setParamedicFullname(cstmt.getString(8)+" "+cstmt.getString(9));
 			 currentResponse.setCarModel(cstmt.getString(10));

@@ -26,6 +26,8 @@ public class AndroidResponseModel {
 
 	private Long batchID;
 	
+	private Integer responseSequenceNumber;
+	
 	//---------------------------------------------------//
 	
 	public String getDriverFullname() {
@@ -114,6 +116,12 @@ public class AndroidResponseModel {
 	}
 	public void setBatchID(Long batchID) {
 		this.batchID = batchID;
+	}
+	public Integer getResponseSequenceNumber() {
+		return responseSequenceNumber;
+	}
+	public void setResponseSequenceNumber(Integer responseSequenceNumber) {
+		this.responseSequenceNumber = responseSequenceNumber;
 	}
 
 	

@@ -23,6 +23,7 @@ public class IncidentResponseDAL {
 		String SPsql = "EXEC usp_Response_Insert ?,?,?,?,?,?,?,?,?,?,?,?";
 		IncidentResponseMsg ResponseData = new IncidentResponseMsg();
 		Connection conn = DBManager.getDBConn();
+		String YelloPadUniqueID = "";
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			
@@ -102,11 +103,14 @@ public class IncidentResponseDAL {
 			 currentResponse.setIncidentPriority(cstmt.getString(21));
 			 currentResponse.setAlarmLevel(cstmt.getString(23));
 			 currentResponse.setBatchID(cstmt.getLong(25));
+			
+			 YelloPadUniqueID = getYellopadUniqueID(incidentResponse.getVin(),conn);
+			 
 			 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			System.out.println(gson.toJson(currentResponse));
 			HttpConnectionHelper httpConnectionHelper = new HttpConnectionHelper();
-			httpConnectionHelper.sendPost(FBLocationEnum.FBResponseURL.getJsonKey(), gson.toJson(currentResponse).toString());
+			httpConnectionHelper.sendPost(FBLocationEnum.FBResponseURL.getJsonKey()+YelloPadUniqueID+".json", gson.toJson(currentResponse).toString());
 			 
 			}else {
 				
@@ -127,6 +131,30 @@ public class IncidentResponseDAL {
 
 		return ResponseData;
 	}
+	
+	
+	public static String getYellopadUniqueID(Integer id,Connection conn) {
+		
+		String SPsql = "EXEC usp_IncidentResponse_GetYelloPad ?,?";
+		String ResponseData = "";
+		
+		try {
+			
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setInt(1, id);
+			cstmt.registerOutParameter(2, Types.NVARCHAR);
+			cstmt.executeUpdate();
+			ResponseData = cstmt.getString(2); //YelloPadUniqueID
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return ResponseData;
+	}
+	
+	
+	
 	public static ResponseStatusMsg SearchResponseStatus(SearchResponseStatus incidentResponse) {
 
 		String SPsql = "EXEC usp_ResponseStatus_SearchByID ?,?,?,?";

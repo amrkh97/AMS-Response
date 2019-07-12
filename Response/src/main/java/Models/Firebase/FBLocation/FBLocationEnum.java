@@ -3,7 +3,7 @@ package Models.Firebase.FBLocation;
 public enum FBLocationEnum 
 {
 	FBLocationsURL("https://ambulance-73353.firebaseio.com/Location.json"),
-	FBResponseURL("https://ambulance-73353.firebaseio.com/Response/1d11c1d4ea9b8e5b.json"),
+	FBResponseURL("https://ambulance-73353.firebaseio.com/Response/"),
 	Address("address"),
 	Longitude("longitude"),
 	Latitude("latitude");

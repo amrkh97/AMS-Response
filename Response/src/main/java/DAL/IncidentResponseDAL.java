@@ -1,7 +1,5 @@
 package DAL;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -53,7 +51,8 @@ public class IncidentResponseDAL {
 			
 			 SPsql = "USE KAN_AMO; EXEC [dbo].[usp_getAndroidIncident]"
 			 		+  "?,?,?,?,?,?,?,?,?,?,?,?,?"
-			 		+ ",?,?,?,?,?,?,?,?,?,?,?,?";	
+			 		+ ",?,?,?,?,?,?,?,?,?,?,?,?"
+			 		+ ",?,?,?,?";	
 			 
 			 cstmt = conn.prepareCall(SPsql);
 			 cstmt.setInt(1, incidentResponse.getVin());
@@ -82,6 +81,10 @@ public class IncidentResponseDAL {
 			 cstmt.registerOutParameter(23, Types.NVARCHAR);//Alarm Name
 			 cstmt.registerOutParameter(24, Types.NVARCHAR);//Alarm Note
 			 cstmt.registerOutParameter(25, Types.BIGINT); //BatchID
+			 cstmt.registerOutParameter(26,Types.INTEGER); //PatientID
+			 cstmt.registerOutParameter(27,Types.NVARCHAR); //CallerFName
+			 cstmt.registerOutParameter(28,Types.NVARCHAR); //CallerLName 
+			 cstmt.registerOutParameter(29,Types.NVARCHAR); //CallerMobile
 			 cstmt.executeUpdate();
 
 			 currentResponse.setResponseSequenceNumber(ResponseData.getResponseID());
@@ -104,6 +107,9 @@ public class IncidentResponseDAL {
 			 currentResponse.setIncidentPriority(cstmt.getString(21));
 			 currentResponse.setAlarmLevel(cstmt.getString(23));
 			 currentResponse.setBatchID(cstmt.getLong(25));
+			 currentResponse.setPatientID(cstmt.getInt(26));
+			 currentResponse.setCallerName(cstmt.getString(27)+" "+cstmt.getString(28));
+			 currentResponse.setCallerMobile(cstmt.getString(29));
 			
 			 YelloPadUniqueID = getYellopadUniqueID(incidentResponse.getVin(),conn);
 			 

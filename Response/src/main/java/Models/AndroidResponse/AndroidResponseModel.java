@@ -27,6 +27,12 @@ public class AndroidResponseModel {
 	private Long batchID;
 	
 	private Integer responseSequenceNumber;
+
+	private Integer patientID;
+	
+	private String callerName;
+	
+	private String callerMobile;
 	
 	//---------------------------------------------------//
 	
@@ -122,6 +128,24 @@ public class AndroidResponseModel {
 	}
 	public void setResponseSequenceNumber(Integer responseSequenceNumber) {
 		this.responseSequenceNumber = responseSequenceNumber;
+	}
+	public String getCallerMobile() {
+		return callerMobile;
+	}
+	public void setCallerMobile(String callerMobile) {
+		this.callerMobile = callerMobile;
+	}
+	public String getCallerName() {
+		return callerName;
+	}
+	public void setCallerName(String callerName) {
+		this.callerName = callerName;
+	}
+	public Integer getPatientID() {
+		return patientID;
+	}
+	public void setPatientID(Integer patientID) {
+		this.patientID = patientID;
 	}
 
 	

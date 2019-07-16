@@ -8,6 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import Models.Data.DataModel;
 import Models.IncidentResponse.IncidentResponse;
 import Models.IncidentResponse.SearchResponseStatus;
 import Models.IncidentResponse.UpdateResponseStatus;
@@ -22,7 +23,7 @@ public class Services {
 		return "Server is Running ..!";
 	}
 	
-	@Path("Incident/addIncidentResponse")
+	@Path("incident/addIncidentResponse")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -78,7 +79,7 @@ public class Services {
 			return Response.ok(ResponseManager.SearchResponseStatus(Incident)).build();
 		}
 	}
-	@Path("Incident/updateResponseStatus")
+	@Path("incident/updateResponseStatus")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -96,5 +97,14 @@ public class Services {
 			return Response.ok(ResponseManager.UpdateResponseStatus(Incident)).build();
 		}
 	}
+	
+	@Path("incident/getCallers")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCallers(DataModel Incident) {
+		
+			return Response.ok(ResponseManager.getCallers(Incident)).build();
+		}
 
 }

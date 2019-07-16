@@ -11,8 +11,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import DB.DBManager;
-import Models.AlarmLevel.AlarmLevel;
-import Models.AlarmLevel.AlarmLevelJson;
 import Models.AndroidResponse.AndroidResponseModel;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
@@ -232,23 +230,23 @@ public class IncidentResponseDAL {
 
 			while (rs.next()) {
 				responseData = new ResponseTable();
-				responseData.setiSQN(rs.getInt("dbo.Responses.IncidentSQN"));
-				responseData.setTypeName(rs.getString("dbo.IncidentTypes.TypeName"));
-				responseData.setResponseID(rs.getInt("dbo.Responses.SequenceNumber"));
-				responseData.setPriorityName(rs.getString("dbo.Priorities.PriorityName"));
-				responseData.setRespStatus(rs.getString("dbo.Responses.RespStatus"));
-				responseData.setVin(rs.getInt("dbo.AmbulanceMap.VIN"));
-				responseData.setParamID(rs.getInt("dbo.AmbulanceMap.ParamedicID"));
-				responseData.setParamFname(rs.getString("ParamedicTable.Fname"));
-				responseData.setParamLname(rs.getString("ParamedicTable.Lname"));
-				responseData.setParamContact(rs.getString("ParamedicTable.ContactNumber"));
-				responseData.setDriverID(rs.getInt("dbo.AmbulanceMap.DriverID"));
-				responseData.setDriverFname(rs.getString("DriverTable.Fname"));
-				responseData.setDriverLname(rs.getString("DriverTable.Lname"));
-				responseData.setDriverContact(rs.getString("DriverTable.ContactNumber"));
-				responseData.setLicensePlate(rs.getString("dbo.AmbulanceVehicle.LicencePlate"));
-				responseData.setModel(rs.getString("dbo.AmbulanceVehicle.Model"));
-				responseData.setFfa(rs.getString("PatientLoc.FreeFormatAddress"));
+				responseData.setiSQN(rs.getInt("IncidentSQN"));
+				responseData.setTypeName(rs.getString("TypeName"));
+				responseData.setResponseID(rs.getInt("SequenceNumber"));
+				responseData.setPriorityName(rs.getString("PriorityName"));
+				responseData.setRespStatus(rs.getString("RespStatus"));
+				responseData.setVin(rs.getInt("VIN"));
+				responseData.setParamID(rs.getInt("ParamedicID"));
+				responseData.setParamFname(rs.getString("Fname"));
+				responseData.setParamLname(rs.getString("Lname"));
+				responseData.setParamContact(rs.getString("ContactNumber"));
+				responseData.setDriverID(rs.getInt("DriverID"));
+				responseData.setDriverFname(rs.getString("Fname"));
+				responseData.setDriverLname(rs.getString("Lname"));
+				responseData.setDriverContact(rs.getString("ContactNumber"));
+				responseData.setLicensePlate(rs.getString("LicencePlate"));
+				responseData.setModel(rs.getString("Model"));
+				responseData.setFfa(rs.getString("FreeFormatAddress"));
 				
 				responseDataArray.add(responseData);
 			}

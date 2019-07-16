@@ -11,8 +11,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import DB.DBManager;
-import Models.AlarmLevel.AlarmLevel;
-import Models.AlarmLevel.AlarmLevelJson;
 import Models.AndroidResponse.AndroidResponseModel;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;

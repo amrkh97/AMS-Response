@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import DB.DBManager;
+import Models.AlarmLevel.AlarmLevel;
+import Models.AlarmLevel.AlarmLevelJson;
 import Models.AndroidResponse.AndroidResponseModel;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
@@ -216,6 +218,55 @@ public class IncidentResponseDAL {
 		}
 
 		return ResponseData;
+	}
+	public static ResponseTableJson getResponseTable() {
+
+		String responseTableSP = "EXEC usp_Response_TableData";
+		Connection conn = DBManager.getDBConn();
+		ArrayList<ResponseTable> responseDataArray = new ArrayList<ResponseTable>();
+		ResponseTableJson responseTableJson = new ResponseTableJson();
+		ResponseTable responseData;
+		try {
+			CallableStatement cstmt = conn.prepareCall(responseTableSP);
+			ResultSet rs = cstmt.executeQuery();
+
+			while (rs.next()) {
+				responseData = new ResponseTable();
+				responseData.setiSQN(rs.getInt("dbo.Responses.IncidentSQN"));
+				responseData.setTypeName(rs.getString("dbo.IncidentTypes.TypeName"));
+				responseData.setResponseID(rs.getInt("dbo.Responses.SequenceNumber"));
+				responseData.setPriorityName(rs.getString("dbo.Priorities.PriorityName"));
+				responseData.setRespStatus(rs.getString("dbo.Responses.RespStatus"));
+				responseData.setVin(rs.getInt("dbo.AmbulanceMap.VIN"));
+				responseData.setParamID(rs.getInt("dbo.AmbulanceMap.ParamedicID"));
+				responseData.setParamFname(rs.getString("ParamedicTable.Fname"));
+				responseData.setParamLname(rs.getString("ParamedicTable.Lname"));
+				responseData.setParamContact(rs.getString("ParamedicTable.ContactNumber"));
+				responseData.setDriverID(rs.getInt("dbo.AmbulanceMap.DriverID"));
+				responseData.setDriverFname(rs.getString("DriverTable.Fname"));
+				responseData.setDriverLname(rs.getString("DriverTable.Lname"));
+				responseData.setDriverContact(rs.getString("DriverTable.ContactNumber"));
+				responseData.setLicensePlate(rs.getString("dbo.AmbulanceVehicle.LicencePlate"));
+				responseData.setModel(rs.getString("dbo.AmbulanceVehicle.Model"));
+				responseData.setFfa(rs.getString("PatientLoc.FreeFormatAddress"));
+				
+				responseDataArray.add(responseData);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+
+				e.printStackTrace();
+			}
+		}
+		responseTableJson.setResponseTableData(responseDataArray);
+		return responseTableJson;
 	}
 
 }

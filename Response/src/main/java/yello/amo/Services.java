@@ -7,10 +7,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import Models.Callers.AddCallerModel;
-import Models.Callers.ServerResponse;
-import Models.Data.DataModel;
 import Models.IncidentResponse.IncidentResponse;
 import Models.IncidentResponse.SearchResponseStatus;
 import Models.IncidentResponse.UpdateResponseStatus;

@@ -12,9 +12,6 @@ import com.google.gson.GsonBuilder;
 
 import DB.DBManager;
 import Models.AndroidResponse.AndroidResponseModel;
-import Models.Callers.CallerModel;
-import Models.Callers.CallersArray;
-import Models.Callers.ServerResponse;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.IncidentResponse.*;

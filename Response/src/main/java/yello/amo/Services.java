@@ -77,30 +77,4 @@ public class Services {
 		}
 	}
 
-	@Path("incident/getCallers")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCallers(DataModel Incident) {
-
-		return Response.ok(ResponseManager.getCallers(Incident)).build();
-	}
-
-	@Path("incident/addCaller")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response addCaller(AddCallerModel caller) {
-		ServerResponse response = new ServerResponse();
-		response = ResponseManager.addCaller(caller);
-
-		switch (response.getResponseHexCode()) {
-		case "01":
-			return Response.status(401,response.getResponseMsg()).build();
-		default:
-			return Response.ok(response).build();
-		}
-
-	}
-
 }

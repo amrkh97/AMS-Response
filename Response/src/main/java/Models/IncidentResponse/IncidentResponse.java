@@ -10,6 +10,8 @@ public class IncidentResponse {
 	private int primaryResponseSQN;
 	private int alarmLevelID;
 	private String personsCount;
+	private Integer patientID;
+	
 	public int getVin() {
 		return vin;
 	}
@@ -63,6 +65,12 @@ public class IncidentResponse {
 	}
 	public void setPrimaryResponseSQN(int primaryResponseSQN) {
 		this.primaryResponseSQN = primaryResponseSQN;
+	}
+	public Integer getPatientID() {
+		return patientID;
+	}
+	public void setPatientID(Integer patientID) {
+		this.patientID = patientID;
 	}
 
 }

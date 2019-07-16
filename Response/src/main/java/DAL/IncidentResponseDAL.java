@@ -107,7 +107,7 @@ public class IncidentResponseDAL {
 				currentResponse.setIncidentPriority(cstmt.getString(21));
 				currentResponse.setAlarmLevel(cstmt.getString(23));
 				currentResponse.setBatchID(cstmt.getLong(25));
-				currentResponse.setPatientID(cstmt.getInt(26));
+				currentResponse.setPatientID(incidentResponse.getPatientID());
 				currentResponse.setCallerName(cstmt.getString(27) + " " + cstmt.getString(28));
 				currentResponse.setCallerMobile(cstmt.getString(29));
 

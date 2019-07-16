@@ -16,5 +16,8 @@ public class ResponseManager {
 	public static UpdateResponseStatusMsg UpdateResponseStatus(UpdateResponseStatus Incident) {
 		return IncidentResponseDAL.UpdateResponseStatus(Incident);
 	}
+	public static ResponseTableJson getResponseTableData() {
+		return IncidentResponseDAL.getResponseTable();
+	}
 	
 }

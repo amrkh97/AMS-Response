@@ -72,5 +72,12 @@ public class Services {
 			return Response.ok(ResponseManager.UpdateResponseStatus(Incident)).build();
 		}
 	}
+	
+	@Path("incident/getResponseTable")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getResponseTableData() {
+		return Response.ok(ResponseManager.getResponseTableData()).build();
+	}
 
 }

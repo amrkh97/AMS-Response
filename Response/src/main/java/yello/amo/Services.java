@@ -8,6 +8,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import Models.Callers.AddCallerModel;
+import Models.Callers.ServerResponse;
 import Models.Data.DataModel;
 import Models.IncidentResponse.IncidentResponse;
 import Models.IncidentResponse.SearchResponseStatus;
@@ -16,95 +18,89 @@ import BLL.ResponseManager;
 
 @Path("api")
 public class Services {
-	
+
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getIt() {
 		return "Server is Running ..!";
 	}
-	
+
 	@Path("incident/addIncidentResponse")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response InsertResponse(IncidentResponse Incident) throws Exception {
-		if(Incident.getVin() == 0)
-		{
+		if (Incident.getVin() == 0) {
 			return Response.ok(" No Car ID Provided ").build();
-		}
-		else if(Incident.getStartLocID() == 0)
-		{
+		} else if (Incident.getStartLocID() == 0) {
 			return Response.ok(" No Start Location ID Provided ").build();
-		}
-		else if(Incident.getPickLocID() == 0)
-		{
+		} else if (Incident.getPickLocID() == 0) {
 			return Response.ok(" No Pick Up Locaiton ID Provided ").build();
-		}
-		else if(Incident.getDropLocID() == 0)
-		{
+		} else if (Incident.getDropLocID() == 0) {
 			return Response.ok(" No Drop Locaiton ID Provided ").build();
-		}
-		else if(Incident.getDestLocID() == 0)
-		{
+		} else if (Incident.getDestLocID() == 0) {
 			return Response.ok(" No Destination Locaiton ID Provided ").build();
-		}
-		else if(Incident.getiSQN() == 0)
-		{
+		} else if (Incident.getiSQN() == 0) {
 			return Response.ok(" No Incident Squance Number Provided ").build();
-		}
-		else if(Incident.getAlarmLevelID() == 0)
-		{
+		} else if (Incident.getAlarmLevelID() == 0) {
 			return Response.ok(" No Alarm Level ID Provided ").build();
-		}
-		else if(Incident.getPersonsCount() == null || Incident.getPersonsCount() == "")
-		{
+		} else if (Incident.getPersonsCount() == null || Incident.getPersonsCount() == "") {
 			return Response.ok(" No Persons Count Provided ").build();
-		}
-		else
-		{
+		} else {
 			return Response.ok(ResponseManager.addIncidentResponse(Incident)).build();
 		}
 	}
+
 	@Path("Incident/searchResponseStatus")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response SearchResponseStatus(SearchResponseStatus Incident) {
-		if(Incident.getSequanceNumber() == 0)
-		{
+		if (Incident.getSequanceNumber() == 0) {
 			return Response.ok(" No Response Squance Number Provided ").build();
-		}
-		else
-		{
+		} else {
 			return Response.ok(ResponseManager.SearchResponseStatus(Incident)).build();
 		}
 	}
+
 	@Path("incident/updateResponseStatus")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response UpdateResponseStatus(UpdateResponseStatus Incident) {
-		if(Incident.getSequanceNumber() == 0)
-		{
+		if (Incident.getSequanceNumber() == 0) {
 			return Response.ok(" No Response Squance Number Provided ").build();
-		}
-		else if (Incident.getResponseStatus() == null || Incident.getResponseStatus().equals("")) 
-		{
+		} else if (Incident.getResponseStatus() == null || Incident.getResponseStatus().equals("")) {
 			return Response.ok(" No Response Status Provided ").build();
-		}
-		else
-		{
+		} else {
 			return Response.ok(ResponseManager.UpdateResponseStatus(Incident)).build();
 		}
 	}
-	
+
 	@Path("incident/getCallers")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCallers(DataModel Incident) {
-		
-			return Response.ok(ResponseManager.getCallers(Incident)).build();
+
+		return Response.ok(ResponseManager.getCallers(Incident)).build();
+	}
+
+	@Path("incident/addCaller")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addCaller(AddCallerModel caller) {
+		ServerResponse response = new ServerResponse();
+		response = ResponseManager.addCaller(caller);
+
+		switch (response.getResponseHexCode()) {
+		case "01":
+			return Response.status(401,response.getResponseMsg()).build();
+		default:
+			return Response.ok(response).build();
 		}
+
+	}
 
 }

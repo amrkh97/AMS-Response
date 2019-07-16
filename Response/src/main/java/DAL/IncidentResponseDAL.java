@@ -14,6 +14,7 @@ import DB.DBManager;
 import Models.AndroidResponse.AndroidResponseModel;
 import Models.Callers.CallerModel;
 import Models.Callers.CallersArray;
+import Models.Callers.ServerResponse;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.IncidentResponse.*;
@@ -221,30 +222,29 @@ public class IncidentResponseDAL {
 	}
 
 	public static CallersArray getCallers(Integer iSQN) {
-		
+
 		String SPsql = "EXEC usp_Incident_getCallers ?";
 		Connection conn = DBManager.getDBConn();
 		ResultSet resultSet;
 		CallersArray callersArray = new CallersArray();
 		ArrayList<CallerModel> arrayList = new ArrayList<CallerModel>();
-		
+
 		try {
-			
+
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setInt(1, iSQN);
-			resultSet=cstmt.executeQuery();
-			
-			while(resultSet.next()) {
-				
+			resultSet = cstmt.executeQuery();
+
+			while (resultSet.next()) {
+
 				CallerModel callerModel = new CallerModel();
-				callerModel.setCallerName(resultSet.getString(1)+" "+resultSet.getString(2));
+				callerModel.setCallerName(resultSet.getString(1) + " " + resultSet.getString(2));
 				callerModel.setCallerMobile(resultSet.getString(3));
 				callerModel.setCallTime(resultSet.getString(4));
-				
+
 				arrayList.add(callerModel);
 			}
-			
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -257,5 +257,41 @@ public class IncidentResponseDAL {
 		}
 		callersArray.setCallersList(arrayList);
 		return callersArray;
+	}
+
+	
+	public static ServerResponse addCaller(Integer iSQN, String fName,String lName, String mobileNumber) {
+		ServerResponse response = new ServerResponse();
+		String SPsql = "EXEC usp_Incident_InsertCallData ?,?,?,?,?";
+		Connection conn = DBManager.getDBConn();
+		try {
+
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setInt(1, iSQN);
+			cstmt.setString(2, fName);
+			cstmt.setString(3, lName);
+			cstmt.setString(4, mobileNumber);
+			cstmt.registerOutParameter(5, Types.NVARCHAR);
+			cstmt.executeUpdate();
+			response.setResponseHexCode(cstmt.getString(5));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(response.getResponseHexCode().equals("00")) {
+			response.setResponseMsg("Added Succesfully");
+		}else {
+			response.setResponseMsg("Addition Failed, This Number is already registered to this incident.");
+		}
+
+		return response;
 	}
 }

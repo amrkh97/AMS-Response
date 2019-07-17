@@ -230,23 +230,23 @@ public class IncidentResponseDAL {
 
 			while (rs.next()) {
 				responseData = new ResponseTable();
-				responseData.setiSQN(rs.getInt("IncidentSQN"));
-				responseData.setTypeName(rs.getString("TypeName"));
-				responseData.setResponseID(rs.getInt("SequenceNumber"));
-				responseData.setPriorityName(rs.getString("PriorityName"));
-				responseData.setRespStatus(rs.getString("RespStatus"));
-				responseData.setVin(rs.getInt("VIN"));
-				responseData.setParamID(rs.getInt("ParamedicID"));
-				responseData.setParamFname(rs.getString("Fname"));
-				responseData.setParamLname(rs.getString("Lname"));
-				responseData.setParamContact(rs.getString("ContactNumber"));
-				responseData.setDriverID(rs.getInt("DriverID"));
-				responseData.setDriverFname(rs.getString("Fname"));
-				responseData.setDriverLname(rs.getString("Lname"));
-				responseData.setDriverContact(rs.getString("ContactNumber"));
-				responseData.setLicensePlate(rs.getString("LicencePlate"));
-				responseData.setModel(rs.getString("Model"));
-				responseData.setFfa(rs.getString("FreeFormatAddress"));
+				responseData.setiSQN(rs.getInt(1));
+				responseData.setTypeName(rs.getString(2));
+				responseData.setResponseID(rs.getInt(3));
+				responseData.setPriorityName(rs.getString(4));
+				responseData.setRespStatus(rs.getString(5));
+				responseData.setVin(rs.getInt(6));
+				responseData.setParamID(rs.getInt(7));
+				responseData.setParamFname(rs.getString(8));
+				responseData.setParamLname(rs.getString(9));
+				responseData.setParamContact(rs.getString(10));
+				responseData.setDriverID(rs.getInt(11));
+				responseData.setDriverFname(rs.getString(12));
+				responseData.setDriverLname(rs.getString(13));
+				responseData.setDriverContact(rs.getString(14));
+				responseData.setLicensePlate(rs.getString(15));
+				responseData.setModel(rs.getString(16));
+				responseData.setFfa(rs.getString(17));
 				
 				responseDataArray.add(responseData);
 			}

@@ -40,8 +40,6 @@ public class Services {
 			return Response.ok(" No Incident Squance Number Provided ").build();
 		} else if (Incident.getAlarmLevelID() == 0) {
 			return Response.ok(" No Alarm Level ID Provided ").build();
-		} else if (Incident.getPersonsCount() == null || Incident.getPersonsCount() == "") {
-			return Response.ok(" No Persons Count Provided ").build();
 		} else {
 			return Response.ok(ResponseManager.addIncidentResponse(Incident)).build();
 		}

@@ -2,8 +2,6 @@ package Models.IncidentResponse;
 
 import java.util.ArrayList;
 
-import Models.IncidentResponse.*;
-
 public class ResponseTableJson {
 	
 	private ArrayList<ResponseTable> responseTableData;

@@ -1,5 +1,7 @@
 package DAL;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -246,18 +248,18 @@ public class IncidentResponseDAL {
 				responseData.setDriverContact(rs.getString(14));
 				responseData.setLicensePlate(rs.getString(15));
 				responseData.setModel(rs.getString(16));
-				responseData.setFfa(rs.getString(17));
+				responseData.setFfa(URLDecoder.decode(rs.getString(17),"UTF-8"));
 				
 				responseDataArray.add(responseData);
 			}
 			rs.close();
-		} catch (SQLException e) {
+		} catch (SQLException | UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
-				System.out.println("Connention Closed");
+				System.out.println("Connection Closed");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 

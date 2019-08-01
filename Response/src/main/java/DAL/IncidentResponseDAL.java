@@ -1,5 +1,6 @@
 package DAL;
 
+import java.net.URLEncoder;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -102,8 +103,11 @@ public class IncidentResponseDAL {
 				destinationLocation.setLatitude(cstmt.getString(17));
 				destinationLocation.setFreeFormatAddress(cstmt.getString(18));
 				currentResponse.setDestinationLocation(destinationLocation);
-
-				currentResponse.setIncidentType(cstmt.getString(19));
+				
+				String encodedIncidentType = cstmt.getString(19);
+				encodedIncidentType = URLEncoder.encode(encodedIncidentType, "UTF-8");
+				
+				currentResponse.setIncidentType(encodedIncidentType);
 				currentResponse.setIncidentPriority(cstmt.getString(21));
 				currentResponse.setAlarmLevel(cstmt.getString(23));
 				currentResponse.setBatchID(cstmt.getLong(25));
@@ -257,7 +261,7 @@ public class IncidentResponseDAL {
 		} finally {
 			try {
 				conn.close();
-				System.out.println("Connention Closed");
+				System.out.println("Connection Closed");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 

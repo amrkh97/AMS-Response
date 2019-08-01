@@ -1,6 +1,7 @@
 package DAL;
 
-import java.net.URLEncoder;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -250,6 +251,7 @@ public class IncidentResponseDAL {
 				responseData.setDriverContact(rs.getString(14));
 				responseData.setLicensePlate(rs.getString(15));
 				responseData.setModel(rs.getString(16));
+//				responseData.setFfa(URLDecoder.decode(rs.getString(17),"UTF-8"));
 				responseData.setFfa(rs.getString(17));
 				
 				responseDataArray.add(responseData);

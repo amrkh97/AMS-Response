@@ -1,7 +1,6 @@
 package DAL;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -107,9 +106,12 @@ public class IncidentResponseDAL {
 				
 				String encodedIncidentType = cstmt.getString(19);
 				encodedIncidentType = URLEncoder.encode(encodedIncidentType, "UTF-8");
-				
 				currentResponse.setIncidentType(encodedIncidentType);
-				currentResponse.setIncidentPriority(cstmt.getString(21));
+				
+				String encodedIncidentPriority = cstmt.getString(21);
+				encodedIncidentPriority = URLEncoder.encode(encodedIncidentPriority, "UTF-8");
+				currentResponse.setIncidentPriority(encodedIncidentPriority);
+				
 				currentResponse.setAlarmLevel(cstmt.getString(23));
 				currentResponse.setBatchID(cstmt.getLong(25));
 				currentResponse.setPatientID(incidentResponse.getPatientID());

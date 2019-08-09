@@ -91,5 +91,12 @@ public class Services {
 	public Response getResponseTableData() {
 		return Response.ok(ResponseManager.getResponseTableData()).header("Access-Control-Allow-Origin", "*").build();
 	}
+	
+	@Path("incident/getTripHistory")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getTripHistory(SearchResponseStatus model) {
+		return Response.ok(ResponseManager.getTripHistory(model)).header("Access-Control-Allow-Origin", "*").build();
+	}
 
 }

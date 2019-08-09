@@ -50,7 +50,7 @@ public class Services {
 			response.setResponseMsg(" No Alarm Level ID Provided ");
 			return Response.status(408).entity(response).build();
 		} else {
-			return Response.ok(ResponseManager.addIncidentResponse(Incident)).build();
+			return Response.ok(ResponseManager.addIncidentResponse(Incident)).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
 
@@ -64,7 +64,7 @@ public class Services {
 			response.setResponseMsg(" No Response Squance Number Provided ");
 			return Response.status(401).entity(response).build();
 		} else {
-			return Response.ok(ResponseManager.SearchResponseStatus(Incident)).build();
+			return Response.ok(ResponseManager.SearchResponseStatus(Incident)).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
 
@@ -81,7 +81,7 @@ public class Services {
 			response.setResponseMsg(" No Response Status Provided ");
 			return Response.status(402).entity(response).build();
 		} else {
-			return Response.ok(ResponseManager.UpdateResponseStatus(Incident)).build();
+			return Response.ok(ResponseManager.UpdateResponseStatus(Incident)).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
 	
@@ -89,7 +89,7 @@ public class Services {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getResponseTableData() {
-		return Response.ok(ResponseManager.getResponseTableData()).build();
+		return Response.ok(ResponseManager.getResponseTableData()).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 }

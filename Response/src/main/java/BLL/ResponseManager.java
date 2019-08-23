@@ -24,6 +24,14 @@ public class ResponseManager {
 		ResponseTableJson responseTableJson = new ResponseTableJson();
 		Connection intermediateConnection = DBManager.getDBConn();
 		try {
+			
+			try {
+				Integer check = model.getDays();
+			} catch (Exception e) {
+				model = new ResponseTableDatePicker();
+				model.setDays(1);
+			}
+			
 			responseTableJson = IncidentResponseDAL.getResponseTable(model.getDays(),intermediateConnection);
 		} finally {
 			try {

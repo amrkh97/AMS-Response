@@ -224,15 +224,22 @@ public class IncidentResponseDAL {
 
 		return ResponseData;
 	}
-	public static ResponseTableJson getResponseTable() {
+	public static ResponseTableJson getResponseTable(Integer numberOfDays, Connection conn) {
 
-		String responseTableSP = "EXEC usp_Response_TableData";
-		Connection conn = DBManager.getDBConn();
+		String responseTableSP = "EXEC usp_Response_TableData ?";
+		
 		ArrayList<ResponseTable> responseDataArray = new ArrayList<ResponseTable>();
 		ResponseTableJson responseTableJson = new ResponseTableJson();
 		ResponseTable responseData;
 		try {
 			CallableStatement cstmt = conn.prepareCall(responseTableSP);
+			try {
+				cstmt.setInt(1, numberOfDays);	
+			} catch (Exception e) {
+				// TODO: handle exception
+				numberOfDays = 1; //Default One Day.
+				cstmt.setInt(1, numberOfDays);
+			}
 			ResultSet rs = cstmt.executeQuery();
 
 			while (rs.next()) {
@@ -262,15 +269,6 @@ public class IncidentResponseDAL {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-
-				e.printStackTrace();
-			}
 		}
 		responseTableJson.setResponseTableData(responseDataArray);
 		return responseTableJson;

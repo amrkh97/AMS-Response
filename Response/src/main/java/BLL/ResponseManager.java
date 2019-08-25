@@ -20,8 +20,31 @@ public class ResponseManager {
 	public static UpdateResponseStatusMsg UpdateResponseStatus(UpdateResponseStatus Incident) {
 		return IncidentResponseDAL.UpdateResponseStatus(Incident);
 	}
-	public static ResponseTableJson getResponseTableData() {
-		return IncidentResponseDAL.getResponseTable();
+	
+	@SuppressWarnings("unused")
+	public static ResponseTableJson getResponseTableData(ResponseTableDatePicker model) {
+		ResponseTableJson responseTableJson = new ResponseTableJson();
+		Connection intermediateConnection = DBManager.getDBConn();
+		try {
+			
+			try {
+				Integer check = model.getDays();
+			} catch (Exception e) {
+				model = new ResponseTableDatePicker();
+				model.setDays(1);
+			}
+			
+			responseTableJson = IncidentResponseDAL.getResponseTable(model.getDays(),intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return responseTableJson;
 	}
 
 	public static TripHistoryArray getTripHistory(SearchResponseStatus model) {

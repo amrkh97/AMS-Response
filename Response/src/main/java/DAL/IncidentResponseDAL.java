@@ -274,4 +274,31 @@ public class IncidentResponseDAL {
 		return responseTableJson;
 	}
 
+	public static TripHistoryArray getTripHistory(int sequenceNumber, Connection conn) {
+		String SPSql = "EXEC usp_Response_TripHistory ?";
+		ArrayList<TripHistoryModel> historyModels = new ArrayList<TripHistoryModel>();
+		TripHistoryArray historyArray =new TripHistoryArray();
+		
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPSql);
+			cstmt.setInt(1,sequenceNumber);
+			ResultSet rs = cstmt.executeQuery();
+
+			while (rs.next()) {
+				
+				TripHistoryModel tripHistoryModel = new TripHistoryModel();
+				tripHistoryModel.setResponseCode(rs.getString(2)); // Response Code
+				tripHistoryModel.setResponseTime(rs.getString(3)); // Response Time
+				historyModels.add(tripHistoryModel);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		historyArray.setHistoryArray(historyModels);
+		return historyArray;
+	}
+
 }

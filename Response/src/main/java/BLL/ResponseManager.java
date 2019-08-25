@@ -20,6 +20,8 @@ public class ResponseManager {
 	public static UpdateResponseStatusMsg UpdateResponseStatus(UpdateResponseStatus Incident) {
 		return IncidentResponseDAL.UpdateResponseStatus(Incident);
 	}
+	
+	@SuppressWarnings("unused")
 	public static ResponseTableJson getResponseTableData(ResponseTableDatePicker model) {
 		ResponseTableJson responseTableJson = new ResponseTableJson();
 		Connection intermediateConnection = DBManager.getDBConn();

@@ -7,11 +7,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import Models.AcceptableResponseStatus.ResponseStatusModel;
+import Models.AcceptableResponseStatus.UpdateResponseStatusModel;
 import Models.IncidentResponse.IncidentResponse;
 import Models.IncidentResponse.ResponseTableDatePicker;
 import Models.IncidentResponse.SearchResponseStatus;
 import Models.IncidentResponse.ServerResponse;
 import Models.IncidentResponse.UpdateResponseStatus;
+import BLL.AcceptableResponseManager;
 import BLL.ResponseManager;
 
 @Path("api")
@@ -93,5 +97,81 @@ public class Services {
 	public Response getResponseTableData(ResponseTableDatePicker model) {
 		return Response.ok(ResponseManager.getResponseTableData(model)).header("Access-Control-Allow-Origin", "*").build();
 	}
+	
+	@Path("response/getAllAcceptableCodes")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllAcceptableCodes() {
+		
+		return Response.ok(AcceptableResponseManager.getAllAcceptableCodes()).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@Path("response/addAcceptableCode")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addAcceptableCode(ResponseStatusModel model) {
+		ServerResponse response = new ServerResponse();
+		response = AcceptableResponseManager.addAcceptableCode(model);
+		
+		switch (response.getResponseHexCode()) {
+		case "01":
+			
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+		}
+		
+	}
+	
+	@Path("response/updateAcceptableCode")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateAcceptableCode(UpdateResponseStatusModel model) {
+		
+		ServerResponse response = new ServerResponse();
+		response = AcceptableResponseManager.updateAcceptableCode(model);
+		
+		switch (response.getResponseHexCode()) {
+		case "01":
+			
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
+			
+		case "02":
+			
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		case "03":
+			
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+	
+	@Path("response/deleteAcceptableCode")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteAcceptableCode(ResponseStatusModel model) {
+		
+		ServerResponse response = new ServerResponse();
+		response = AcceptableResponseManager.deleteAcceptableCode(model);
+		
+		switch (response.getResponseHexCode()) {
+		case "01":
+			
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+	
+	
+	
+	
 
 }

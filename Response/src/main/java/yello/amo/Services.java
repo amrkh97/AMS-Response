@@ -170,6 +170,13 @@ public class Services {
 		}
 	}
 	
+	@Path("incident/getTripHistory")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getTripHistory(SearchResponseStatus model) {
+		return Response.ok(ResponseManager.getTripHistory(model)).header("Access-Control-Allow-Origin", "*").build();
+	}
+
 	
 	
 	

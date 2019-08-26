@@ -8,6 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import Models.IncidentResponse.IncidentResponse;
+import Models.IncidentResponse.ResponseTableDatePicker;
 import Models.IncidentResponse.SearchResponseStatus;
 import Models.IncidentResponse.ServerResponse;
 import Models.IncidentResponse.UpdateResponseStatus;
@@ -87,9 +88,10 @@ public class Services {
 	
 	@Path("incident/getResponseTable")
 	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getResponseTableData() {
-		return Response.ok(ResponseManager.getResponseTableData()).header("Access-Control-Allow-Origin", "*").build();
+	public Response getResponseTableData(ResponseTableDatePicker model) {
+		return Response.ok(ResponseManager.getResponseTableData(model)).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 }

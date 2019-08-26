@@ -260,8 +260,12 @@ public class IncidentResponseDAL {
 				responseData.setDriverContact(rs.getString(14));
 				responseData.setLicensePlate(rs.getString(15));
 				responseData.setModel(rs.getString(16));
-//				responseData.setFfa(URLDecoder.decode(rs.getString(17),"UTF-8"));
-				responseData.setFfa(rs.getString(17));
+				responseData.setPickFFA(rs.getString(17));
+				responseData.setPickLat(rs.getString(18));
+				responseData.setPickLong(rs.getString(19));
+				responseData.setDropFFA(rs.getString(20));
+				responseData.setDropLat(rs.getString(21));
+				responseData.setDropLong(rs.getString(22));
 				
 				responseDataArray.add(responseData);
 			}

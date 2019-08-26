@@ -17,7 +17,14 @@ public class ResponseTable {
 	private String driverContact;
 	private String licensePlate;
 	private String model;
-	private String ffa;
+	private String pickFFA;
+	private String pickLong;
+	private String pickLat;
+	private String dropFFA;
+	private String dropLong;
+	private String dropLat;
+	
+	
 	public int getiSQN() {
 		return iSQN;
 	}
@@ -114,11 +121,41 @@ public class ResponseTable {
 	public void setModel(String model) {
 		this.model = model;
 	}
-	public String getFfa() {
-		return ffa;
+	public String getPickFFA() {
+		return pickFFA;
 	}
-	public void setFfa(String ffa) {
-		this.ffa = ffa;
+	public void setPickFFA(String pickFFA) {
+		this.pickFFA = pickFFA;
+	}
+	public String getPickLong() {
+		return pickLong;
+	}
+	public void setPickLong(String pickLong) {
+		this.pickLong = pickLong;
+	}
+	public String getPickLat() {
+		return pickLat;
+	}
+	public void setPickLat(String pickLat) {
+		this.pickLat = pickLat;
+	}
+	public String getDropFFA() {
+		return dropFFA;
+	}
+	public void setDropFFA(String dropFFA) {
+		this.dropFFA = dropFFA;
+	}
+	public String getDropLong() {
+		return dropLong;
+	}
+	public void setDropLong(String dropLong) {
+		this.dropLong = dropLong;
+	}
+	public String getDropLat() {
+		return dropLat;
+	}
+	public void setDropLat(String dropLat) {
+		this.dropLat = dropLat;
 	}
 
 }

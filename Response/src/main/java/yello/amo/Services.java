@@ -35,25 +35,25 @@ public class Services {
 	public Response InsertResponse(IncidentResponse Incident) throws Exception {
 		ServerResponse response = new ServerResponse();
 		if (Incident.getVin() == 0) {
-			response.setResponseMsg("A01004007001");
+			response.setResponseHexCode("A01004007001");
 			return Response.status(401).entity(response).build();
 		} else if (Incident.getStartLocID() == 0) {
-			response.setResponseMsg("A01004007002");
+			response.setResponseHexCode("A01004007002");
 			return Response.status(402).entity(response).build();
 		} else if (Incident.getPickLocID() == 0) {
-			response.setResponseMsg("A01004007003");
+			response.setResponseHexCode("A01004007003");
 			return Response.status(403).entity(response).build();
 		} else if (Incident.getDropLocID() == 0) {
-			response.setResponseMsg("A01004007004");
+			response.setResponseHexCode("A01004007004");
 			return Response.status(405).entity(response).build();
 		} else if (Incident.getDestLocID() == 0) {
-			response.setResponseMsg("A01004007005");
+			response.setResponseHexCode("A01004007005");
 			return Response.status(406).entity(response).build();
 		} else if (Incident.getiSQN() == 0) {
-			response.setResponseMsg("A01004007006");
+			response.setResponseHexCode("A01004007006");
 			return Response.status(407).entity(response).build();
 		} else if (Incident.getAlarmLevelID() == 0) {
-			response.setResponseMsg("A01004007007");
+			response.setResponseHexCode("A01004007007");
 			return Response.status(408).entity(response).build();
 		} else {
 			IncidentResponseMsg incidentResponseMsg = new IncidentResponseMsg();
@@ -77,7 +77,7 @@ public class Services {
 	public Response SearchResponseStatus(SearchResponseStatus Incident) {
 		ServerResponse response = new ServerResponse();
 		if (Incident.getSequanceNumber() == 0) {
-			response.setResponseMsg("A01004008001");
+			response.setResponseHexCode("A01004008001");
 			return Response.status(401).entity(response).build();
 		} else {
 			return Response.ok(ResponseManager.SearchResponseStatus(Incident)).header("Access-Control-Allow-Origin", "*").build();
@@ -91,10 +91,10 @@ public class Services {
 	public Response UpdateResponseStatus(UpdateResponseStatus Incident) {
 		ServerResponse response = new ServerResponse();
 		if (Incident.getSequanceNumber() == 0) {
-			response.setResponseMsg("A01004009001");
+			response.setResponseHexCode("A01004009001");
 			return Response.status(401).entity(response).build();
 		} else if (Incident.getResponseStatus() == null || Incident.getResponseStatus().equals("")) {
-			response.setResponseMsg("A01004009002");
+			response.setResponseHexCode("A01004009002");
 			return Response.status(402).entity(response).build();
 		} else {
 			return Response.ok(ResponseManager.UpdateResponseStatus(Incident)).header("Access-Control-Allow-Origin", "*").build();

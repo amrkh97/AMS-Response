@@ -61,8 +61,8 @@ public class Services {
 			switch (incidentResponseMsg.getReturnHex()) {
 			case "FE":
 				incidentResponseMsg.setResponseMessage("A01004007008");
-				return Response.status(410).entity(incidentResponseMsg).build();
-
+			//	return Response.status(410).entity(incidentResponseMsg).build();
+				return Response.ok(incidentResponseMsg).build();
 			default:
 				return Response.ok(incidentResponseMsg).header("Access-Control-Allow-Origin", "*").build();
 			}

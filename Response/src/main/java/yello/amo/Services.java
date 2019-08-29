@@ -60,7 +60,7 @@ public class Services {
 			incidentResponseMsg = ResponseManager.addIncidentResponse(Incident); 
 			switch (incidentResponseMsg.getReturnHex()) {
 			case "FE":
-				incidentResponseMsg.setResponseMessage("A01004007008");
+				incidentResponseMsg.setReturnHex("A01004007008");
 			//	return Response.status(410).entity(incidentResponseMsg).build();
 				return Response.ok(incidentResponseMsg).build();
 			default:

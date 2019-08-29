@@ -46,8 +46,10 @@ public class IncidentResponseDAL {
 			ResponseData.setResponseMessage(cstmt.getString(11));
 
 			// -------------------------------------------------//
-			if (ResponseData.getReturnHex().equals("00")) {
+			if (ResponseData.getReturnHex().equals("00") || ResponseData.getReturnHex().equals("FE")) {
 
+				ResponseData.setReturnHex("00");
+				
 				AndroidResponseModel currentResponse = new AndroidResponseModel();
 				LocationModel startLocation = new LocationModel();
 				LocationModel destinationLocation = new LocationModel();
@@ -129,7 +131,7 @@ public class IncidentResponseDAL {
 			} else {
 
 				// Do Nothing
-
+				System.out.println("FAILED TO ADD RESPONSE");
 			}
 
 		} catch (SQLException e) {

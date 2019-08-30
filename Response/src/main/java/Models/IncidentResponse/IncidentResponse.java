@@ -11,6 +11,7 @@ public class IncidentResponse {
 	private int alarmLevelID;
 	private String personsCount;
 	private Integer patientID;
+	private String ticketNumber;
 	
 	public int getVin() {
 		return vin;
@@ -71,6 +72,12 @@ public class IncidentResponse {
 	}
 	public void setPatientID(Integer patientID) {
 		this.patientID = patientID;
+	}
+	public String getTicketNumber() {
+		return ticketNumber;
+	}
+	public void setTicketNumber(String ticketNumber) {
+		this.ticketNumber = ticketNumber;
 	}
 
 }

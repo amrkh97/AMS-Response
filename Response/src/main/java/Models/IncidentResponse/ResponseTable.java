@@ -23,6 +23,7 @@ public class ResponseTable {
 	private String dropFFA;
 	private String dropLong;
 	private String dropLat;
+	private String ticketNumber;
 	
 	
 	public int getiSQN() {
@@ -156,6 +157,12 @@ public class ResponseTable {
 	}
 	public void setDropLat(String dropLat) {
 		this.dropLat = dropLat;
+	}
+	public String getTicketNumber() {
+		return ticketNumber;
+	}
+	public void setTicketNumber(String ticketNumber) {
+		this.ticketNumber = ticketNumber;
 	}
 
 }

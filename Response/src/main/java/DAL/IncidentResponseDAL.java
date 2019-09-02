@@ -37,6 +37,12 @@ public class IncidentResponseDAL {
 			cstmt.setInt(7, incidentResponse.getPrimaryResponseSQN());
 			cstmt.setInt(8, incidentResponse.getAlarmLevelID());
 			cstmt.setString(9, incidentResponse.getPersonsCount());
+			try {
+				cstmt.setString(10, incidentResponse.getTicketNumber());
+			} catch (Exception e) {
+				cstmt.setString(10, "-");
+				
+			}
 			cstmt.setString(10, incidentResponse.getTicketNumber());
 			cstmt.registerOutParameter(11, Types.NVARCHAR);
 			cstmt.registerOutParameter(12, Types.NVARCHAR);

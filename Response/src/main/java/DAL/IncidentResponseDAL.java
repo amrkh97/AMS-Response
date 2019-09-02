@@ -43,7 +43,6 @@ public class IncidentResponseDAL {
 				cstmt.setString(10, "-");
 				
 			}
-			cstmt.setString(10, incidentResponse.getTicketNumber());
 			cstmt.registerOutParameter(11, Types.NVARCHAR);
 			cstmt.registerOutParameter(12, Types.NVARCHAR);
 			cstmt.registerOutParameter(13, Types.INTEGER);

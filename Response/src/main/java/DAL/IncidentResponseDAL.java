@@ -324,4 +324,30 @@ public class IncidentResponseDAL {
 		return historyArray;
 	}
 
+	public static ServerResponse assignVehicleToResponse(int primaryResponseSQN, int vin,
+			Connection intermediateConnection) {
+		ServerResponse response = new ServerResponse();
+		String SPSql = "EXEC usp_Response_AssignCar ?,?,?,?";
+		
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPSql);
+			cstmt.setInt(1,primaryResponseSQN);
+			cstmt.setInt(2,vin);
+			cstmt.registerOutParameter(3, Types.NVARCHAR);
+			cstmt.registerOutParameter(4, Types.NVARCHAR);
+			cstmt.executeUpdate();
+
+			response.setResponseHexCode(cstmt.getString(3));
+			response.setResponseMsg(cstmt.getString(4));
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return response;
+	}
+
 }

@@ -191,6 +191,27 @@ public class Services {
 		return Response.ok(ResponseManager.getTripHistory(model)).header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	@Path("incident/assignVehicle")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response assignVehicleToResponse (IncidentResponse model) {
+		
+		if(model.getPrimaryResponseSQN() == 0) {
+			ServerResponse entity = new ServerResponse();
+			entity.setResponseHexCode("");
+			entity.setResponseMsg("No Response Sequence Number Provided");
+			return Response.status(400).entity(entity).header("Access-Control-Allow-Origin", "*").build();	
+		}
+		
+		if(model.getVin() == 0) {
+			ServerResponse entity = new ServerResponse();
+			entity.setResponseHexCode("");
+			entity.setResponseMsg("No Vin Provided");
+			return Response.status(401).entity(entity).header("Access-Control-Allow-Origin", "*").build();	
+		}
+		
+		return Response.ok(ResponseManager.assignVehicleToResponse(model)).header("Access-Control-Allow-Origin", "*").build();
+	}
 	
 	
 	

@@ -126,7 +126,13 @@ public class IncidentResponseDAL {
 				currentResponse.setPatientID(incidentResponse.getPatientID());
 				currentResponse.setCallerName(cstmt.getString(27) + " " + cstmt.getString(28));
 				currentResponse.setCallerMobile(cstmt.getString(29));
-				currentResponse.setTicketNumber(incidentResponse.getTicketNumber());
+				try {
+					currentResponse.setTicketNumber(incidentResponse.getTicketNumber());
+						
+				} catch (Exception e) {
+					currentResponse.setTicketNumber("-");
+					
+				}
 				
 				YelloPadUniqueID = getYellopadUniqueID(incidentResponse.getVin(), conn);
 

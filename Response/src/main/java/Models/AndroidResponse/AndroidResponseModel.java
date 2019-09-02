@@ -34,6 +34,8 @@ public class AndroidResponseModel {
 	
 	private String callerMobile;
 	
+	private String ticketNumber;
+	
 	//---------------------------------------------------//
 	
 	public String getDriverFullname() {
@@ -146,6 +148,12 @@ public class AndroidResponseModel {
 	}
 	public void setPatientID(Integer patientID) {
 		this.patientID = patientID;
+	}
+	public String getTicketNumber() {
+		return ticketNumber;
+	}
+	public void setTicketNumber(String ticketNumber) {
+		this.ticketNumber = ticketNumber;
 	}
 
 	

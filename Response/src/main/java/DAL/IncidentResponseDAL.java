@@ -21,7 +21,7 @@ import Models.Location.LocationModel;
 public class IncidentResponseDAL {
 	public static IncidentResponseMsg addResponse(IncidentResponse incidentResponse) throws Exception {
 
-		String SPsql = "EXEC usp_Response_Insert ?,?,?,?,?,?,?,?,?,?,?,?";
+		String SPsql = "EXEC usp_Response_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?";
 		IncidentResponseMsg ResponseData = new IncidentResponseMsg();
 		Connection conn = DBManager.getDBConn();
 		String YelloPadUniqueID = "";
@@ -37,13 +37,19 @@ public class IncidentResponseDAL {
 			cstmt.setInt(7, incidentResponse.getPrimaryResponseSQN());
 			cstmt.setInt(8, incidentResponse.getAlarmLevelID());
 			cstmt.setString(9, incidentResponse.getPersonsCount());
-			cstmt.registerOutParameter(10, Types.NVARCHAR);
+			try {
+				cstmt.setString(10, incidentResponse.getTicketNumber());
+			} catch (Exception e) {
+				cstmt.setString(10, "-");
+				
+			}
 			cstmt.registerOutParameter(11, Types.NVARCHAR);
-			cstmt.registerOutParameter(12, Types.INTEGER);
-			cstmt.execute();
-			ResponseData.setResponseID(cstmt.getInt(12));
-			ResponseData.setReturnHex(cstmt.getString(10));
-			ResponseData.setResponseMessage(cstmt.getString(11));
+			cstmt.registerOutParameter(12, Types.NVARCHAR);
+			cstmt.registerOutParameter(13, Types.INTEGER);
+			cstmt.executeUpdate();
+			ResponseData.setResponseID(cstmt.getInt(13));
+			ResponseData.setReturnHex(cstmt.getString(11));
+			ResponseData.setResponseMessage(cstmt.getString(12));
 
 			// -------------------------------------------------//
 			if (ResponseData.getReturnHex().equals("00") || ResponseData.getReturnHex().equals("FE")) {
@@ -119,14 +125,21 @@ public class IncidentResponseDAL {
 				currentResponse.setPatientID(incidentResponse.getPatientID());
 				currentResponse.setCallerName(cstmt.getString(27) + " " + cstmt.getString(28));
 				currentResponse.setCallerMobile(cstmt.getString(29));
-
+				try {
+					currentResponse.setTicketNumber(incidentResponse.getTicketNumber());
+						
+				} catch (Exception e) {
+					currentResponse.setTicketNumber("-");
+					
+				}
+				
 				YelloPadUniqueID = getYellopadUniqueID(incidentResponse.getVin(), conn);
 
 				Gson gson = new GsonBuilder().setPrettyPrinting().create();
 				System.out.println(gson.toJson(currentResponse));
 				HttpConnectionHelper httpConnectionHelper = new HttpConnectionHelper();
-				httpConnectionHelper.sendPost(FBLocationEnum.FBResponseURL.getJsonKey() + YelloPadUniqueID + ".json",
-						gson.toJson(currentResponse).toString());
+				httpConnectionHelper.sendPost(FBLocationEnum.FBResponseURL.getJsonKey()
+				+ YelloPadUniqueID + ".json", gson.toJson(currentResponse).toString());
 
 			} else {
 
@@ -139,7 +152,7 @@ public class IncidentResponseDAL {
 		} finally {
 			try {
 				conn.close();
-				System.out.println("Connention Closed");
+				System.out.println("Connection Closed");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -268,6 +281,7 @@ public class IncidentResponseDAL {
 				responseData.setDropFFA(rs.getString(20));
 				responseData.setDropLat(rs.getString(21));
 				responseData.setDropLong(rs.getString(22));
+				responseData.setTicketNumber(rs.getString(23));
 				
 				responseDataArray.add(responseData);
 			}

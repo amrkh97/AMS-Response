@@ -34,10 +34,13 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response InsertResponse(IncidentResponse Incident) throws Exception {
 		ServerResponse response = new ServerResponse();
+		/*
 		if (Incident.getVin() == 0) {
 			response.setResponseHexCode("A01004007001");
 			return Response.status(401).entity(response).build();
-		} else if (Incident.getStartLocID() == 0) {
+		} else
+		*/ 
+		if (Incident.getStartLocID() == 0) {
 			response.setResponseHexCode("A01004007002");
 			return Response.status(402).entity(response).build();
 		} else if (Incident.getPickLocID() == 0) {

@@ -38,9 +38,11 @@ public class IncidentResponseDAL {
 			cstmt.setInt(8, incidentResponse.getAlarmLevelID());
 			cstmt.setString(9, incidentResponse.getPersonsCount());
 			try {
+				System.out.println("TICKET: "+ incidentResponse.getTicketNumber());
 				cstmt.setString(10, incidentResponse.getTicketNumber());
 			} catch (Exception e) {
-				cstmt.setString(10, "-");
+				incidentResponse.setTicketNumber("-");
+				cstmt.setString(10, incidentResponse.getTicketNumber());
 				
 			}
 			cstmt.registerOutParameter(11, Types.NVARCHAR);
@@ -52,7 +54,8 @@ public class IncidentResponseDAL {
 			ResponseData.setResponseMessage(cstmt.getString(12));
 
 			// -------------------------------------------------//
-			if (ResponseData.getReturnHex().equals("00") || ResponseData.getReturnHex().equals("FE")) {
+			
+			if ( incidentResponse.getVin() != 0 &&(ResponseData.getReturnHex().equals("00") || ResponseData.getReturnHex().equals("FE"))) {
 
 				ResponseData.setReturnHex("00");
 				
@@ -144,7 +147,7 @@ public class IncidentResponseDAL {
 			} else {
 
 				// Do Nothing
-				System.out.println("FAILED TO ADD RESPONSE");
+				System.out.println("DID NOT SEND TO ANDROID BECAUSE OF FAILTURE TO ADD RESPONSE OR NO VIN");
 			}
 
 		} catch (SQLException e) {

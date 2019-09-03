@@ -327,20 +327,119 @@ public class IncidentResponseDAL {
 	public static ServerResponse assignVehicleToResponse(int primaryResponseSQN, int vin,
 			Connection intermediateConnection) {
 		ServerResponse response = new ServerResponse();
-		String SPSql = "EXEC usp_Response_AssignCar ?,?,?,?";
-		
+		String SPSql = "EXEC usp_Response_AssignCar ?,?,?,?,?,?,?,?,?";
+		String YelloPadUniqueID = "";
 		try {
 			CallableStatement cstmt = intermediateConnection.prepareCall(SPSql);
 			cstmt.setInt(1,primaryResponseSQN);
 			cstmt.setInt(2,vin);
-			cstmt.registerOutParameter(3, Types.NVARCHAR);
-			cstmt.registerOutParameter(4, Types.NVARCHAR);
+			cstmt.registerOutParameter(3, Types.NVARCHAR); //HexCode
+			cstmt.registerOutParameter(4, Types.NVARCHAR); //HexMsg
+			cstmt.registerOutParameter(5, Types.INTEGER); //Start Loc
+			cstmt.registerOutParameter(6, Types.INTEGER); //Dest Loc
+			cstmt.registerOutParameter(7, Types.INTEGER); //Alarm Level
+			cstmt.registerOutParameter(8, Types.INTEGER); //ISQN
+			cstmt.registerOutParameter(9, Types.NVARCHAR); //Ticket
 			cstmt.executeUpdate();
 
 			response.setResponseHexCode(cstmt.getString(3));
 			response.setResponseMsg(cstmt.getString(4));
+			Integer startLocID = cstmt.getInt(5);
+			Integer destLocID = cstmt.getInt(6);
+			Integer alarmLevelID = cstmt.getInt(7);
+			Integer iSQN = cstmt.getInt(8);
+			String ticketNumber = cstmt.getString(9);
+			 	
+				AndroidResponseModel currentResponse = new AndroidResponseModel();
+				LocationModel startLocation = new LocationModel();
+				LocationModel destinationLocation = new LocationModel();
+
+				String SPsql = "USE KAN_AMO; EXEC [dbo].[usp_getAndroidIncident]" + "?,?,?,?,?,?,?,?,?,?,?,?,?"
+						+ ",?,?,?,?,?,?,?,?,?,?,?,?" + ",?,?,?,?";
+
+				cstmt = intermediateConnection.prepareCall(SPsql);
+				cstmt.setInt(1, vin);
+				cstmt.setInt(2, startLocID);
+				cstmt.setInt(3, destLocID);
+				cstmt.setInt(4, alarmLevelID);
+				cstmt.setInt(5, iSQN);
+
+				cstmt.registerOutParameter(6, Types.NVARCHAR); // Driver First Name
+				cstmt.registerOutParameter(7, Types.NVARCHAR); // Driver Last Name
+				cstmt.registerOutParameter(8, Types.NVARCHAR); // Paramedic First Name
+				cstmt.registerOutParameter(9, Types.NVARCHAR); // Paramedic Last Name
+				cstmt.registerOutParameter(10, Types.NVARCHAR);// Car Model
+				cstmt.registerOutParameter(11, Types.NVARCHAR);// Car Brand
+				cstmt.registerOutParameter(12, Types.NVARCHAR);// Car License
+				cstmt.registerOutParameter(13, Types.NVARCHAR);// Start Longitude
+				cstmt.registerOutParameter(14, Types.NVARCHAR);// Start Latitude
+				cstmt.registerOutParameter(15, Types.NVARCHAR);// Start FFA
+				cstmt.registerOutParameter(16, Types.NVARCHAR);// Dest Longitude
+				cstmt.registerOutParameter(17, Types.NVARCHAR);// Dest Latitude
+				cstmt.registerOutParameter(18, Types.NVARCHAR);// Dest FFA
+				cstmt.registerOutParameter(19, Types.NVARCHAR);// Incident Name
+				cstmt.registerOutParameter(20, Types.NVARCHAR);// Incident Note
+				cstmt.registerOutParameter(21, Types.NVARCHAR);// Priority Name
+				cstmt.registerOutParameter(22, Types.NVARCHAR);// Priority Note
+				cstmt.registerOutParameter(23, Types.NVARCHAR);// Alarm Name
+				cstmt.registerOutParameter(24, Types.NVARCHAR);// Alarm Note
+				cstmt.registerOutParameter(25, Types.BIGINT); // BatchID
+				cstmt.registerOutParameter(26, Types.INTEGER); // PatientID
+				cstmt.registerOutParameter(27, Types.NVARCHAR); // CallerFName
+				cstmt.registerOutParameter(28, Types.NVARCHAR); // CallerLName
+				cstmt.registerOutParameter(29, Types.NVARCHAR); // CallerMobile
+				cstmt.executeUpdate();
+
+				currentResponse.setResponseSequenceNumber(primaryResponseSQN);
+				currentResponse.setDriverFullname(cstmt.getString(6) + " " + cstmt.getString(7));
+				currentResponse.setParamedicFullname(cstmt.getString(8) + " " + cstmt.getString(9));
+				currentResponse.setCarModel(cstmt.getString(10));
+				currentResponse.setCarBrand(cstmt.getString(11));
+				currentResponse.setLicensePlate(cstmt.getString(12));
+				startLocation.setLongitude(cstmt.getString(13));
+				startLocation.setLatitude(cstmt.getString(14));
+				startLocation.setFreeFormatAddress(cstmt.getString(15));
+				currentResponse.setStartLocation(startLocation);
+
+				destinationLocation.setLongitude(cstmt.getString(16));
+				destinationLocation.setLatitude(cstmt.getString(17));
+				destinationLocation.setFreeFormatAddress(cstmt.getString(18));
+				currentResponse.setDestinationLocation(destinationLocation);
+				
+				String encodedIncidentType = cstmt.getString(19);
+				encodedIncidentType = URLEncoder.encode(encodedIncidentType, "UTF-8");
+				currentResponse.setIncidentType(encodedIncidentType);
+				
+				String encodedIncidentPriority = cstmt.getString(21);
+				encodedIncidentPriority = URLEncoder.encode(encodedIncidentPriority, "UTF-8");
+				currentResponse.setIncidentPriority(encodedIncidentPriority);
+				
+				currentResponse.setAlarmLevel(cstmt.getString(23));
+				currentResponse.setBatchID(cstmt.getLong(25));
+				//TODO: Check where to get patient ID
+			//	currentResponse.setPatientID(incidentResponse.getPatientID());
+				currentResponse.setCallerName(cstmt.getString(27) + " " + cstmt.getString(28));
+				currentResponse.setCallerMobile(cstmt.getString(29));
+				try {
+					currentResponse.setTicketNumber(ticketNumber);
+						
+				} catch (Exception e) {
+					currentResponse.setTicketNumber("-");
+					
+				}
+				
+				YelloPadUniqueID = getYellopadUniqueID(vin, intermediateConnection);
+
+				Gson gson = new GsonBuilder().setPrettyPrinting().create();
+				System.out.println(gson.toJson(currentResponse));
+				
+				HttpConnectionHelper httpConnectionHelper = new HttpConnectionHelper();
+				httpConnectionHelper.sendPost(FBLocationEnum.FBResponseURL.getJsonKey()
+				+ YelloPadUniqueID + ".json", gson.toJson(currentResponse).toString());
+
+			 
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

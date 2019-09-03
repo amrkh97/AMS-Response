@@ -83,5 +83,41 @@ public class ResponseManager {
 		
 		return response;
 	}
+
+	public static ResponseTableJson getCarHistory(IncidentResponse model) {
+		ResponseTableJson responseTableJson = new ResponseTableJson();
+		Connection intermediateConnection = DBManager.getDBConn();
+		try {
+			responseTableJson = IncidentResponseDAL.getCarHistory(model.getVin(),intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return responseTableJson;
+	}
+
+	public static ServerResponse editResponse(IncidentResponse incident) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse response = new ServerResponse();
+		
+		try {
+			response = IncidentResponseDAL.editResponse(incident,intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return response;
+	}
 	
 }

@@ -416,8 +416,7 @@ public class IncidentResponseDAL {
 				
 				currentResponse.setAlarmLevel(cstmt.getString(23));
 				currentResponse.setBatchID(cstmt.getLong(25));
-				//TODO: Check where to get patient ID
-			//	currentResponse.setPatientID(incidentResponse.getPatientID());
+				currentResponse.setPatientID(0);
 				currentResponse.setCallerName(cstmt.getString(27) + " " + cstmt.getString(28));
 				currentResponse.setCallerMobile(cstmt.getString(29));
 				try {

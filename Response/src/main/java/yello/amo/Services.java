@@ -34,10 +34,13 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response InsertResponse(IncidentResponse Incident) throws Exception {
 		ServerResponse response = new ServerResponse();
+		/*
 		if (Incident.getVin() == 0) {
 			response.setResponseHexCode("A01004007001");
 			return Response.status(401).entity(response).build();
-		} else if (Incident.getStartLocID() == 0) {
+		} else
+		*/ 
+		if (Incident.getStartLocID() == 0) {
 			response.setResponseHexCode("A01004007002");
 			return Response.status(402).entity(response).build();
 		} else if (Incident.getPickLocID() == 0) {
@@ -188,6 +191,27 @@ public class Services {
 		return Response.ok(ResponseManager.getTripHistory(model)).header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	@Path("incident/assignVehicle")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response assignVehicleToResponse (IncidentResponse model) {
+		
+		if(model.getPrimaryResponseSQN() == 0) {
+			ServerResponse entity = new ServerResponse();
+			entity.setResponseHexCode("A01004011001");
+			entity.setResponseMsg("No Response Sequence Number Provided");
+			return Response.status(400).entity(entity).header("Access-Control-Allow-Origin", "*").build();	
+		}
+		
+		if(model.getVin() == 0) {
+			ServerResponse entity = new ServerResponse();
+			entity.setResponseHexCode("A01004011002");
+			entity.setResponseMsg("No Vin Provided");
+			return Response.status(401).entity(entity).header("Access-Control-Allow-Origin", "*").build();	
+		}
+		
+		return Response.ok(ResponseManager.assignVehicleToResponse(model)).header("Access-Control-Allow-Origin", "*").build();
+	}
 	
 	
 	

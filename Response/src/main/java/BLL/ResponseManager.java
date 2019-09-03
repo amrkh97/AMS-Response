@@ -64,5 +64,24 @@ public class ResponseManager {
 		
 		return historyArray;
 	}
+
+	public static ServerResponse assignVehicleToResponse(IncidentResponse model) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse response = new ServerResponse();
+		
+		try {
+			response = IncidentResponseDAL.assignVehicleToResponse(model.getPrimaryResponseSQN(),model.getVin(),intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return response;
+	}
 	
 }

@@ -198,14 +198,14 @@ public class Services {
 		
 		if(model.getPrimaryResponseSQN() == 0) {
 			ServerResponse entity = new ServerResponse();
-			entity.setResponseHexCode("");
+			entity.setResponseHexCode("A01004011001");
 			entity.setResponseMsg("No Response Sequence Number Provided");
 			return Response.status(400).entity(entity).header("Access-Control-Allow-Origin", "*").build();	
 		}
 		
 		if(model.getVin() == 0) {
 			ServerResponse entity = new ServerResponse();
-			entity.setResponseHexCode("");
+			entity.setResponseHexCode("A01004011002");
 			entity.setResponseMsg("No Vin Provided");
 			return Response.status(401).entity(entity).header("Access-Control-Allow-Origin", "*").build();	
 		}

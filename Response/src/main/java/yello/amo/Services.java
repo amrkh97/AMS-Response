@@ -214,6 +214,34 @@ public class Services {
 	}
 	
 	
+	@Path("incident/getCarHistory")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCarHistory(IncidentResponse model) {
+		return Response.ok(ResponseManager.getCarHistory(model)).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	
+	@Path("incident/editResponse")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response editResponse(IncidentResponse Incident) throws Exception {
+		ServerResponse response = new ServerResponse();
+			response = ResponseManager.editResponse(Incident); 
+			switch (response.getResponseHexCode()) {
+			case "01":
+				response.setResponseHexCode("A01004013001");
+			    return Response.status(400).entity(response).build();
+				
+			default:
+				return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+			
+		}
+	}
+	
+	
 	
 
 }
